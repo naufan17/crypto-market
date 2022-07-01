@@ -8,7 +8,7 @@ export default function Main(){
                 <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-5xl md:mx-auto">
                     Update Pasar Kripto
                 </h2>
-                <p className="text-base text-gray-700 md:text-lg">
+                <p className="text-sm text-gray-700 sm:text-lg">
                     Dapatkan update kenaikan dan penurunan harga kripto secara realtime. Terdapat lebih dari 200 kripto yang dapat dipantau
                 </p>
             </div>

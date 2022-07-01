@@ -5,7 +5,6 @@ export default function Content(){
     const [crypto, setCrypto] = useState([]);
     const [price, setPrice] = useState([]);
     const [pairs, setPairs] = useState([]);
-    const [searchField, setSearchField] = useState("");
 
     const getSummaries = async () => {
         try{
@@ -31,9 +30,31 @@ export default function Content(){
         if(keyword === ''){
             getPairs();
         }else{
-            setPairs(pairs.filter(ticker => crypto[ticker.ticker_id].name.toLowerCase().includes(e.target.value)));
+            setPairs(pairs.filter(ticker => crypto[ticker.ticker_id].name.toLowerCase().includes((e.target.value).toLowerCase())));
         };
-        setSearchField(keyword);
+    };
+
+    const handleSorting = (e) => {
+        const property = e.target.value;
+        if(property === ''){
+            getPairs();
+        }else if(property === 'namaAZ'){
+            pairs.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+        }else if(property === 'namaZA'){
+            pairs.sort((a,b) => (a.id > b.id) ? -1 : ((b.id > a.id) ? 1 : 0));
+        }else if(property === 'trenTurun'){
+            pairs.sort((a,b) => (((crypto[a.ticker_id].last - price[a.id])/ price[a.id]) - ((crypto[b.ticker_id].last - price[b.id])/ price[b.id])));
+        }else if(property === 'trenNaik'){
+            pairs.sort((a,b) => (((crypto[b.ticker_id].last - price[b.id])/ price[b.id]) - ((crypto[a.ticker_id].last - price[a.id])/ price[a.id])));
+        }else if(property === 'hargaRendah'){
+            pairs.sort((a,b) => (crypto[a.ticker_id].last - crypto[b.ticker_id].last));
+        }else if(property === 'hargaTinggi'){
+            pairs.sort((a,b) => (crypto[b.ticker_id].last - crypto[a.ticker_id].last));
+        }else if(property === 'volumeRendah'){
+            pairs.sort((a,b) => (crypto[a.ticker_id].vol_idr - crypto[b.ticker_id].vol_idr));
+        }else if(property === 'volumeTinggi'){
+            pairs.sort((a,b) => (crypto[b.ticker_id].vol_idr - crypto[a.ticker_id].vol_idr));
+        }
     };
 
     useEffect(()=>{
@@ -49,31 +70,31 @@ export default function Content(){
     function priceHR(prices){
         if(prices > 0){
             return(
-                <span className="relative inline-block px-3 py-1 ml-4 font-semibold text-green-900 leading-tight">
+                <span className="relative inline-block px-2 py-1 ml-4 font-semibold text-green-900 leading-tight">
                     <span aria-hidden="true" className="absolute inset-0 bg-green-200 opacity-50 rounded-full">
                     </span>
                     <span className="relative">
-                        {prices}
+                        +{prices}%
                     </span>
                 </span>
             )
         }else if(prices < 0){
             return(
-                <span className="relative inline-block px-3 py-1 ml-4 font-semibold text-red-900 leading-tight">
+                <span className="relative inline-block px-2 py-1 ml-4 font-semibold text-red-900 leading-tight">
                     <span aria-hidden="true" className="absolute inset-0 bg-red-200 opacity-50 rounded-full">
                     </span>
                     <span className="relative">
-                        {prices}
+                        {prices}%
                     </span>
                 </span>
             )
         }else if(prices == 0){
             return(
-                <span className="relative inline-block px-3 py-1 ml-4 font-semibold text-gray-900 leading-tight">
+                <span className="relative inline-block px-2 py-1 ml-4 font-semibold text-gray-900 leading-tight">
                     <span aria-hidden="true" className="absolute inset-0 bg-gray-200 opacity-50 rounded-full">
                     </span>
                     <span className="relative">
-                        {prices}
+                        {prices}%
                     </span>
                 </span>
             )
@@ -83,13 +104,17 @@ export default function Content(){
     return (
         <div className="">
             <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
-                <input type="search" value={searchField} onChange={handleSearch} placeholder="Cari nama kripto" required className="flex-grow w-full h-12 px-4 mb-3 text-gray-900 bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
-                <select id="courier" className="inline-flex w-full h-12 px-2 mb-3 font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
-                    <option defaultValue>Filter</option>
-                    <option value="nama">Nama</option>
-                    <option value="perubahan">Perubahan Harga</option>
-                    <option value="harga">Harga</option>
-                    <option value="volume">Volume</option>
+                <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="flex-grow w-full h-12 px-4 mb-3 text-gray-900 bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
+                <select onChange={handleSorting} className="inline-flex w-full h-12 px-2 mb-3 font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
+                    <option value="">Urutkan</option>
+                    <option value="namaAZ">Nama A-Z</option>
+                    <option value="namaZA">Nama Z-A</option>
+                    <option value="trenNaik">Tren Harga Naik</option>
+                    <option value="trenTurun">Tren Harga Turun</option>
+                    <option value="hargaRendah">Harga Rendah</option>
+                    <option value="hargaTinggi">Harga Tinggi</option>
+                    <option value="volumeRendah">Volume Rendah</option>
+                    <option value="volumeTinggi">Volume Tinggi</option>
                 </select>
             </div>
             <div className="grid gap-5 mb-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
