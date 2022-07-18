@@ -18,7 +18,7 @@ export default function Content(){
 
     const getPairs = async () => {
         try{
-            const result = await axios.get('https://indodax.com/api/pairs')
+            const result = await axios.get('https://indodax.com/api/pairs', {mode:'cors'})
             setPairs((result.data).filter(ticker => ticker.base_currency === "idr"));
         }catch(e){
             console.log(e.message);
@@ -62,7 +62,7 @@ export default function Content(){
         getPairs();
         const interval = setInterval(() => {
             getSummaries();
-        }, 1000);
+        }, 3300);
 
         return()=>clearInterval(interval)
     }, []);
