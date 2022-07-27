@@ -119,7 +119,7 @@ export default function Content(){
             </div>
             <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {pairs.map(item => 
-                <div className="p-5 duration-300 transform bg-indigo-50 border rounded shadow-sm shadow- hover:-translate-y-2">
+                <div className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow-sm shadow- hover:-translate-y-2">
                     <div className="flex items-center justify-center sm:w-12 w-10 sm:h-12 h-10 mb-4 rounded-full bg-indigo-50">
                         <img alt="profil" src={item.url_logo} className="mx-auto object-cover rounded-full h-10 w-10"/>
                     </div>
