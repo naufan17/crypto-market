@@ -104,8 +104,8 @@ export default function Content(){
     return (
         <div className="">
             <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
-                <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="flex-grow w-full h-12 px-4 mb-3 sm:text-base text-md text-gray-900  bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
-                <select onChange={handleSorting} className="inline-flex w-full h-12 px-2 mb-3 sm:text-base text-md font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
+                <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="flex-grow w-full sm:h-12 h-10 px-4 mb-3 sm:text-base text-md text-gray-900  bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
+                <select onChange={handleSorting} className="inline-flex w-full sm:h-12 h-10 px-2 mb-3 sm:text-base text-md font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
                     <option value="">Urutkan</option>
                     <option value="namaAZ">Nama A-Z</option>
                     <option value="namaZA">Nama Z-A</option>
