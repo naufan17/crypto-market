@@ -1,14 +1,14 @@
 import React from 'react';
-import Main from './Main'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-class App extends React.Component{
-  render (){
-    return (
-      <div className="bg-gradient-to-r from-indigo-100">
-        <Main/>
-      </div>
-    )
-  }
+import Home from "./pages/Home";
+
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="crypto-market" Component={Home}/>
+      </Routes>
+    </Router>
+  );
 }
-
-export default App;
