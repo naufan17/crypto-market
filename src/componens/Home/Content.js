@@ -55,6 +55,7 @@ export default function Content(){
     };
 
     const handleSorting = (e) => {
+        setLoading(true);
         const property = e.target.value;
 
         const sortingFunctions = {
@@ -78,7 +79,7 @@ export default function Content(){
         getPairs();
         const interval = setInterval(() => {
             getSummaries();
-        }, 3300);
+        }, 2000);
 
         return()=>clearInterval(interval)
     }, []);
