@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import Loading from './Loading'
-import Crypto from './Crypto';
+import Card from './Card';
 
-export default function Content(){
+export default function Main(){
     const [crypto, setCrypto] = useState([]);
     const [price, setPrice] = useState([]);
     const [pairs, setPairs] = useState([]);
@@ -77,6 +77,7 @@ export default function Content(){
     useEffect(()=>{
         getSummaries();
         getPairs();
+
         const interval = setInterval(() => {
             getSummaries();
         }, 2000);
@@ -87,7 +88,7 @@ export default function Content(){
     return (
         <div>
             <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
-                <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="flex-grow w-full sm:h-12 h-10 px-4 mb-3 sm:text-base text-md text-gray-900  bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
+                <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="inline-flex w-full sm:h-12 h-10 px-4 mb-3 sm:text-base text-md text-gray-900  bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
                 <select onChange={handleSorting} className="inline-flex w-full sm:h-12 h-10 px-2 mb-3 sm:text-base text-md font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
                     {sortingOptions.map(option => (
                         <option key={option.value} value={option.value}>
@@ -105,12 +106,13 @@ export default function Content(){
             ) : (
                 <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {pairs.map(item => 
-                        <Crypto
+                        <Card
+                            id = {item.ticker_id}
                             url_logo = {item.url_logo}
                             description = {item.description}
-                            price = {((crypto[item.ticker_id].last - price[item.id]) / price[item.id] * 100).toFixed(2)}
                             name = {crypto[item.ticker_id].name }
-                            harga = {(crypto[item.ticker_id].last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            price = {(crypto[item.ticker_id].last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            price_24h = {((crypto[item.ticker_id].last - price[item.id]) / price[item.id] * 100).toFixed(2)}
                             volume = {(crypto[item.ticker_id].vol_idr).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                         />
                     )}
