@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import Loading from './Loading'
+import SkeletonCard from './SkeletonCard'
 import Card from './Card';
 
 export default function Main(){
@@ -86,7 +86,7 @@ export default function Main(){
     }, []);
 
     return (
-        <div>
+        <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
             <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
                 <input type="search" onChange={handleSearch} placeholder="Cari nama kripto" required className="inline-flex w-full sm:h-12 h-10 px-4 mb-3 sm:text-base text-md text-gray-900  bg-transparent border-2 border-indigo-50 rounded appearance-none sm:w-full sm:mr-2 sm:mb-0 focus:border-slate-200 focus:outline-none focus:shadow-outline"/>
                 <select onChange={handleSorting} className="inline-flex w-full sm:h-12 h-10 px-2 mb-3 sm:text-base text-md font-medium text-gray-900 transition rounded shadow-sm bg-indigo-50 hover:bg-slate-200 sm:w-full sm:ml-2 sm:mb-0 focus:shadow-outline focus:outline-none">
@@ -100,7 +100,7 @@ export default function Main(){
             {isLoading ? (
                 <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {loopLoading.map(loading =>
-                        <Loading/>
+                        <SkeletonCard/>
                     )}
                 </div>
             ) : (
