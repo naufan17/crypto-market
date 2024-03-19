@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import SkeletonCard from './SkeletonCard'
-import Card from './Card';
+import SkeletonCard from './Card/SkeletonCard'
+import Card from './Card/Card';
 
 export default function Main(){
     const [crypto, setCrypto] = useState([]);
