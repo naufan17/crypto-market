@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-
+import axios from '../../config/Api';
 import PriceHR from './PriceHR';
 import Loading from '../Loading'
 
@@ -12,7 +11,7 @@ export default function Header(id){
 
     const getSummaries = async () => {
         try{
-            const result = await axios.get('https://indodax.com/api/summaries')
+            const result = await axios.get('summaries')
             setCrypto(result.data.tickers[id.id]);
             setPrice(result.data.prices_24h);
             setLoading(false);
@@ -24,7 +23,7 @@ export default function Header(id){
 
     const getPairs = async () => {
         try{
-            const result = await axios.get('https://indodax.com/api/pairs', {mode:'cors'})
+            const result = await axios.get('pairs', {mode:'cors'})
             setPairs((result.data).filter(ticker => ticker.ticker_id === id.id));
             setLoading(false);
         }catch(e){

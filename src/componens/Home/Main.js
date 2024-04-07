@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-
+import axios from '../../config/Api';
 import SkeletonCard from './Card/SkeletonCard'
 import Card from './Card/Card';
 
@@ -24,7 +23,7 @@ export default function Main(){
 
     const getSummaries = async () => {
         try{
-            const result = await axios.get('https://indodax.com/api/summaries')
+            const result = await axios.get('summaries')
             setCrypto(result.data.tickers);
             setPrice(result.data.prices_24h);
             setLoading(false);
@@ -36,7 +35,7 @@ export default function Main(){
 
     const getPairs = async () => {
         try{
-            const result = await axios.get('https://indodax.com/api/pairs', {mode:'cors'})
+            const result = await axios.get('pairs', {mode:'cors'})
             setPairs((result.data).filter(ticker => ticker.base_currency === "idr"));
             setLoading(false);
         }catch(e){
