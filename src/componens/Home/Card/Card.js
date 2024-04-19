@@ -13,9 +13,7 @@ export default function Card({id, url_logo, description, name, price, price_24h,
                 <h6 className="sm:text-md text-sm font-semibold leading-5">
                     {description}
                 </h6>
-                <PriceHR
-                    price_24h={price_24h}
-                />
+                <PriceHR price_24h={price_24h}/>
             </div> 
             <p className="sm:text-sm text-xs font-medium text-gray-900 mb-2">
                 {name}

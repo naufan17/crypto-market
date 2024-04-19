@@ -44,7 +44,7 @@ export default function Header(id){
     }, []);
 
     return (
-        <div>
+        <>
             {isLoading ? (
                 <Loading/>
             ) : (
@@ -59,9 +59,7 @@ export default function Header(id){
                                 <h3 className="text-base my-1 font-medium sm:text-lg text-gray-900">{crypto.name}</h3>
                             </div>
                             <div className="flex flex-col">
-                                <PriceHR
-                                    price_24h={((crypto.last - price[pairs[0].id]) / price[pairs[0].id] * 100).toFixed(2)}
-                                />
+                                <PriceHR price_24h={((crypto.last - price[pairs[0].id]) / price[pairs[0].id] * 100).toFixed(2)}/>
                             </div>
                         </div>
                         <div className="grid grid-cols-1">
@@ -73,6 +71,6 @@ export default function Header(id){
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }

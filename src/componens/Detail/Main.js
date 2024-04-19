@@ -3,19 +3,23 @@ import io from 'socket.io-client'
 import Loading from '../Loading'
 
 export default function Main(id){
-    // const [socket, setSocket] = useState(true);
+    const [socket, setSocket] = useState(true);
     // const [response, setResponse] = useState(null);
     // const [isLoading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        const newSocket = io('wss://ws3.indodax.com/ws/');
+        setSocket(newSocket);
 
-    // useEffect(() => {
-    //     const newSocket = io('wss://ws3.indodax.com/ws/');
-    //     setSocket(newSocket);
-    //     // sendRequest();
+        newSocket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+        // sendRequest();
 
-    // return () => {
-    //     newSocket.disconnect();
-    // };
-    // }, []);
+    return () => {
+        newSocket.disconnect();
+    };
+    }, []);
 
     // const sendRequest = () => {
     //     const requestData = {
