@@ -9,11 +9,21 @@ export default function Main(id){
     
     useEffect(() => {
         const newSocket = io('wss://ws3.indodax.com/ws/');
+        
         setSocket(newSocket);
 
         newSocket.on('connect', () => {
             console.log('Connected to WebSocket server');
         });
+
+        newSocket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+        newSocket.on('disconnect', (reason) => {
+            console.log('Disconnected:', reason);
+        });
+
         // sendRequest();
 
     return () => {

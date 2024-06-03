@@ -26,10 +26,9 @@ export default function Main(){
             const result = await axios.get('summaries')
             setCrypto(result.data.tickers);
             setPrice(result.data.prices_24h);
-            setLoading(false);
+            // setLoading(false);
         }catch(e){
             console.log(e.message);
-            setLoading(false);
         }
     };
 
@@ -40,7 +39,6 @@ export default function Main(){
             setLoading(false);
         }catch(e){
             console.log(e.message);
-            setLoading(false);
         }
     };
 
@@ -73,7 +71,7 @@ export default function Main(){
         pairs.sort(sortingFunction);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getSummaries();
         getPairs();
 

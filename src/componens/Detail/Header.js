@@ -14,10 +14,9 @@ export default function Header(id){
             const result = await axios.get('summaries')
             setCrypto(result.data.tickers[id.id]);
             setPrice(result.data.prices_24h);
-            setLoading(false);
+            // setLoading(false);
         }catch(e){
             console.log(e.message);
-            setLoading(false);
         }
     };
 
@@ -28,7 +27,6 @@ export default function Header(id){
             setLoading(false);
         }catch(e){
             console.log(e.message);
-            setLoading(false);
         }
     };
 
