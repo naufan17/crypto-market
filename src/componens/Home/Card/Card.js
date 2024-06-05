@@ -1,11 +1,11 @@
 import React from 'react';
 import PriceHR from './PriceHR';
 
-export default function Card({id, url_logo, description, name, price, price_24h, volume}){
-    const url = `crypto-market/${id}`;
+export default function Card({ id, ticker_id, url_logo, description, name, price, price_24h, volume }){
+    const url = `crypto-market/${ticker_id}`;
 
     return (
-        <a href={url} className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">
+        <a href={url} key={id} className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">
             <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mb-4 rounded-full bg-indigo-100">
                 <img alt="profil" src={url_logo} className="mx-auto object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12"/>
             </div>

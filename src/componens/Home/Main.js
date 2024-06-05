@@ -4,7 +4,7 @@ import SkeletonCard from './Card/SkeletonCard'
 import Card from './Card/Card';
 
 export default function Main(){
-    const [crypto, setCrypto] = useState([]);
+    const [ticker, setTicker] = useState([]);
     const [price, setPrice] = useState([]);
     const [pairs, setPairs] = useState([]);
     const [isLoading, setLoading] = useState(true);
@@ -22,32 +22,32 @@ export default function Main(){
     ];
 
     const getSummaries = async () => {
-        try{
+        try {
             const result = await axios.get('summaries')
-            setCrypto(result.data.tickers);
+            setTicker(result.data.tickers);
             setPrice(result.data.prices_24h);
             // setLoading(false);
-        }catch(e){
+        } catch(e) {
             console.log(e.message);
         }
     };
 
     const getPairs = async () => {
-        try{
+        try {
             const result = await axios.get('pairs', {mode:'cors'})
             setPairs((result.data).filter(ticker => ticker.base_currency === "idr"));
             setLoading(false);
-        }catch(e){
+        } catch(e) {
             console.log(e.message);
         }
     };
 
     const handleSearch = (e) => {
         const keyword = e.target.value;
-        if(keyword === ''){
+        if (keyword === '') {
             getPairs();
-        }else{
-            setPairs(pairs.filter(ticker => crypto[ticker.ticker_id].name.toLowerCase().includes((e.target.value).toLowerCase())));
+        } else {
+            setPairs(pairs.filter(ticker => ticker[ticker.ticker_id].name.toLowerCase().includes((e.target.value).toLowerCase())));
         };
     };
 
@@ -59,12 +59,12 @@ export default function Main(){
             '': getPairs,
             'namaAZ': (a, b) => a.id.localeCompare(b.id),
             'namaZA': (a, b) => b.id.localeCompare(a.id),
-            'trenTurun': (a, b) => ((crypto[a.ticker_id].last - price[a.id]) / price[a.id]) - ((crypto[b.ticker_id].last - price[b.id]) / price[b.id]),
-            'trenNaik': (a, b) => ((crypto[b.ticker_id].last - price[b.id]) / price[b.id]) - ((crypto[a.ticker_id].last - price[a.id]) / price[a.id]),
-            'hargaRendah': (a, b) => crypto[a.ticker_id].last - crypto[b.ticker_id].last,
-            'hargaTinggi': (a, b) => crypto[b.ticker_id].last - crypto[a.ticker_id].last,
-            'volumeRendah': (a, b) => crypto[a.ticker_id].vol_idr - crypto[b.ticker_id].vol_idr,
-            'volumeTinggi': (a, b) => crypto[b.ticker_id].vol_idr - crypto[a.ticker_id].vol_idr,
+            'trenTurun': (a, b) => ((ticker[a.ticker_id].last - price[a.id]) / price[a.id]) - ((ticker[b.ticker_id].last - price[b.id]) / price[b.id]),
+            'trenNaik': (a, b) => ((ticker[b.ticker_id].last - price[b.id]) / price[b.id]) - ((ticker[a.ticker_id].last - price[a.id]) / price[a.id]),
+            'hargaRendah': (a, b) => ticker[a.ticker_id].last - ticker[b.ticker_id].last,
+            'hargaTinggi': (a, b) => ticker[b.ticker_id].last - ticker[a.ticker_id].last,
+            'volumeRendah': (a, b) => ticker[a.ticker_id].vol_idr - ticker[b.ticker_id].vol_idr,
+            'volumeTinggi': (a, b) => ticker[b.ticker_id].vol_idr - ticker[a.ticker_id].vol_idr,
         };
     
         const sortingFunction = sortingFunctions[property] || getPairs;
@@ -104,13 +104,14 @@ export default function Main(){
                 <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {pairs.map(item => 
                         <Card
-                            id = {item.ticker_id}
+                            id = {item.id}
+                            ticker_id = {item.ticker_id}
                             url_logo = {item.url_logo}
                             description = {item.description}
-                            name = {crypto[item.ticker_id].name }
-                            price = {(crypto[item.ticker_id].last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                            price_24h = {((crypto[item.ticker_id].last - price[item.id]) / price[item.id] * 100).toFixed(2)}
-                            volume = {(crypto[item.ticker_id].vol_idr).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            name = {ticker[item.ticker_id].name }
+                            price = {(ticker[item.ticker_id].last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                            price_24h = {((ticker[item.ticker_id].last - price[item.id]) / price[item.id] * 100).toFixed(2)}
+                            volume = {(ticker[item.ticker_id].vol_idr).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                         />
                     )}
                 </div>
