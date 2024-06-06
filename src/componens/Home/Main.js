@@ -26,19 +26,21 @@ export default function Main(){
             const result = await axios.get('summaries')
             setTicker(result.data.tickers);
             setPrice(result.data.prices_24h);
-            // setLoading(false);
+            setLoading(false);
         } catch(e) {
             console.log(e.message);
+            setLoading(false);
         }
     };
 
     const getPairs = async () => {
         try {
             const result = await axios.get('pairs', {mode:'cors'})
-            setPairs((result.data).filter(ticker => ticker.base_currency === "idr"));
+            setPairs((result.data).filter(pair => pair.base_currency === "idr"));
             setLoading(false);
         } catch(e) {
             console.log(e.message);
+            setLoading(false);
         }
     };
 
@@ -47,7 +49,7 @@ export default function Main(){
         if (keyword === '') {
             getPairs();
         } else {
-            setPairs(pairs.filter(ticker => ticker[ticker.ticker_id].name.toLowerCase().includes((e.target.value).toLowerCase())));
+            setPairs(pairs.filter(pair => ticker[pair.ticker_id].name.toLowerCase().includes((e.target.value).toLowerCase())));
         };
     };
 
@@ -79,7 +81,7 @@ export default function Main(){
             getSummaries();
         }, 2000);
 
-        return()=>clearInterval(interval)
+        return () => clearInterval(interval)
     }, []);
 
     return (
@@ -105,7 +107,6 @@ export default function Main(){
                     {pairs.map(item => 
                         <Card
                             id = {item.id}
-                            ticker_id = {item.ticker_id}
                             url_logo = {item.url_logo}
                             description = {item.description}
                             name = {ticker[item.ticker_id].name }

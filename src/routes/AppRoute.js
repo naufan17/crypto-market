@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from "../pages/Home";
-import Detail from "../pages/Detail";
+import Market from "../pages/Market";
 
 export default function AppRoute() {
     const URL = "crypto-market";
@@ -9,7 +9,7 @@ export default function AppRoute() {
     return (
         <Routes>
             <Route path = {URL} Component = {Home}/>
-            <Route path = {URL + '/:id'} Component = {Detail}/>
+            <Route path = {URL + '/:id'} Component = {Market}/>
         </Routes>
     );
 }

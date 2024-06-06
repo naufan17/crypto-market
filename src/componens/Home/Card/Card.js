@@ -1,8 +1,8 @@
 import React from 'react';
 import PriceHR from './PriceHR';
 
-export default function Card({ id, ticker_id, url_logo, description, name, price, price_24h, volume }){
-    const url = `crypto-market/${ticker_id}`;
+export default function Card({ id, url_logo, description, name, price, price_24h, volume }){
+    const url = `crypto-market/${id}`;
 
     return (
         <a href={url} key={id} className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">
@@ -19,7 +19,7 @@ export default function Card({ id, ticker_id, url_logo, description, name, price
                 {name}
             </p>
             <p className="sm:text-sm text-xs font-medium text-gray-900">
-                Price : {price} IDR
+                Harga : {price} IDR
             </p>
             <p className="sm:text-sm text-xs font-medium text-gray-900">
                 Volume : {volume} IDR

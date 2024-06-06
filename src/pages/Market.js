@@ -1,9 +1,9 @@
 import { React } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../componens/Detail/Header';
-import Main from '../componens/Detail/Main';
+import Header from '../componens/Market/Header';
+import Main from '../componens/Market/Main';
 
-export default function Detail() {
+export default function Market() {
     const {id} = useParams();
       
     return (

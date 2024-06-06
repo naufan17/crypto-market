@@ -49,7 +49,7 @@ export default function Main(id){
         const subscribeRequest = {
             "method": 1,
             "params": {
-                "channel": `chart:tick-btcidr`
+                "channel": `chart:tick-${id.id}`
             },
             "id": 2
         };

@@ -11,6 +11,16 @@ const Chart = ({ data }) => {
         // Function to create the chart instance and series
         const createChartInstance = () => {
             const chart = createChart(chartContainerRef.current, {
+                width: chartContainerRef.current.clientWidth,
+                height: 400,
+                layout: {
+                    background: { type: 'solid', color: 'transparent' }, // Make background transparent
+                    textColor: '#d1d4dc'
+                },
+                grid: {
+                    vertLines: { color: 'rgba(42, 46, 57, 0.5)' },
+                    horzLines: { color: 'rgba(42, 46, 57, 0.5)' }
+                },
                 localization: {
                     timeFormatter: (timestamp) => {
                         const date = new Date(timestamp * 1000);
@@ -18,9 +28,33 @@ const Chart = ({ data }) => {
                     }
                 }
             });
-            const areaSeries = chart.addAreaSeries();
+
+            const areaSeries = chart.addAreaSeries({
+                topColor: 'rgba(33, 150, 243, 0.56)',
+                bottomColor: 'rgba(33, 150, 243, 0.04)',
+                lineColor: 'rgba(33, 150, 243, 1)',
+                lineWidth: 2
+            });
+
             chartInstanceRef.current = chart;
             areaSeriesRef.current = areaSeries;
+
+            // Handle chart resize
+            const handleResize = () => {
+                if (chartInstanceRef.current) {
+                    chartInstanceRef.current.resize(chartContainerRef.current.clientWidth, 400);
+                }
+            };
+            window.addEventListener('resize', handleResize);
+
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                if (chartInstanceRef.current) {
+                    chartInstanceRef.current.remove();
+                    chartInstanceRef.current = null;
+                    areaSeriesRef.current = null;
+                }
+            };
         };
 
         // Function to update the series data

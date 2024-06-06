@@ -10,35 +10,41 @@ export default function Header(id){
     const [isLoading, setLoading] = useState(true);
 
     const getSummaries = async () => {
-        try{
-            const result = await axios.get('summaries')
-            setPrice(result.data.prices_24h);
-            setTicker(result.data.tickers[id.id]);
-            setLoading(false);
-        } catch(e) {
-            console.log(e.message);
-        }
+        const result = await axios.get('summaries')
+        setPrice(result.data.prices_24h);
+        // setTicker(result.data.tickers[id.id]);
+    };
+
+    const getTicker = async () => {
+        const result = await axios.get(`ticker/${id.id}`)
+        // setPrice(result.data.prices_24h);
+        setTicker(result.data.ticker);
     };
 
     const getPairs = async () => {
+        const result = await axios.get('pairs', { mode:'cors' })
+        setPairs((result.data).filter(ticker => ticker.id === id.id));
+    };
+
+    const fetchData = async () => {
         try {
-            const result = await axios.get('pairs', { mode:'cors' })
-            setPairs((result.data).filter(ticker => ticker.ticker_id === id.id));
-            // setLoading(false);
-        } catch(e) {
+            await Promise.all([getSummaries(), getTicker(), getPairs()]);
+            setLoading(false);
+        } catch (e) {
             console.log(e.message);
         }
     };
 
     useEffect(() => {
-        getPairs();
-        getSummaries();
+        // getPairs();
+        // getSummaries();
+        fetchData();
 
         const interval = setInterval(() => {
             getSummaries();
         }, 2000);
 
-        return()=>clearInterval(interval)
+        return () => clearInterval(interval)
     }, []);
 
     return (
@@ -52,18 +58,18 @@ export default function Header(id){
                             <div className="flex col-span-2 sm:col-auto items-center justify-center w-14 h-14 rounded-full bg-indigo-100 sm:w-16 sm:h-16">
                                 <img alt="profil" src={pairs[0].url_logo} className="mx-auto object-cover rounded-full w-14 h-14 sm:w-16 sm:h-16"/>
                             </div>
-                            <div className="flex flex-col">
-                                <h3 className="text-lg my-1 font-semibold sm:text-xl leading-5">{pairs[0].description}</h3>
-                                <h3 className="text-base my-1 font-medium sm:text-lg text-gray-900">{ticker.name}</h3>
+                            <div className="flex items-center ">
+                                <h3 className="text-lg font-semibold sm:text-xl leading-5">{pairs[0].description}</h3>
+                                {/* <h3 className="text-base my-0.5 font-medium sm:text-lg text-gray-900">{ticker.name}</h3> */}
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex items-center justify-auto">
                                 <PriceHR price_24h={((ticker.last - price[pairs[0].id]) / price[pairs[0].id] * 100).toFixed(2)}/>
                             </div>
                         </div>
                         <div className="grid grid-cols-1">
                             <div className="flex flex-col">
-                                <h3 className="text-base my-1 font-medium sm:text-lg text-gray-900">Price: {(ticker.last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} IDR</h3>
-                                <h3 className="text-base my-1 font-medium sm:text-lg text-gray-900">Volume : {(ticker.vol_idr).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} IDR</h3>
+                                <h3 className="text-base my-0.5 font-medium sm:text-lg text-gray-900">Harga: {(ticker.last).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} IDR</h3>
+                                <h3 className="text-base my-0.5 font-medium sm:text-lg text-gray-900">Volume : {(ticker.vol_idr).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} IDR</h3>
                             </div>
                         </div>
                     </div>
