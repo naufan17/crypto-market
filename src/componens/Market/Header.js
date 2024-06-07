@@ -12,12 +12,10 @@ export default function Header(id){
     const getSummaries = async () => {
         const result = await axios.get('summaries')
         setPrice(result.data.prices_24h);
-        // setTicker(result.data.tickers[id.id]);
     };
 
     const getTicker = async () => {
         const result = await axios.get(`ticker/${id.id}`)
-        // setPrice(result.data.prices_24h);
         setTicker(result.data.ticker);
     };
 
@@ -36,12 +34,11 @@ export default function Header(id){
     };
 
     useEffect(() => {
-        // getPairs();
-        // getSummaries();
         fetchData();
 
         const interval = setInterval(() => {
             getSummaries();
+            getTicker();
         }, 2000);
 
         return () => clearInterval(interval)
@@ -60,7 +57,6 @@ export default function Header(id){
                             </div>
                             <div className="flex items-center">
                                 <h3 className="text-lg font-semibold sm:text-xl leading-5">{pairs[0].description}</h3>
-                                {/* <h3 className="text-base my-0.5 font-medium sm:text-lg text-gray-900">{ticker.name}</h3> */}
                             </div>
                             <div className="flex items-center justify-auto">
                                 <PriceHR price_24h={((ticker.last - price[pairs[0].id]) / price[pairs[0].id] * 100).toFixed(2)}/>
