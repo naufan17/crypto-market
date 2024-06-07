@@ -2,7 +2,7 @@ import React from 'react';
 import PriceHR from './PriceHR';
 
 export default function Card({ id, url_logo, description, name, price, price_24h, volume }){
-    const url = `crypto-market/${id}`;
+    const url = `${id}`;
 
     return (
         <a href={url} key={id} className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">

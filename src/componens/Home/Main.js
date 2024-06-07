@@ -7,7 +7,7 @@ export default function Main(){
     const [ticker, setTicker] = useState([]);
     const [price, setPrice] = useState([]);
     const [pairs, setPairs] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const loopLoading = [1, 2, 3, 4, 5, 6, 7, 8];
     const sortingOptions = [
         { value: '', label: 'Urutkan' },
@@ -29,7 +29,6 @@ export default function Main(){
             setLoading(false);
         } catch(e) {
             console.log(e.message);
-            setLoading(false);
         }
     };
 
@@ -40,7 +39,6 @@ export default function Main(){
             setLoading(false);
         } catch(e) {
             console.log(e.message);
-            setLoading(false);
         }
     };
 
@@ -96,7 +94,7 @@ export default function Main(){
                     ))}
                 </select>
             </div>
-            {isLoading ? (
+            {loading ? (
                 <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {loopLoading.map(loading =>
                         <SkeletonCard/>
