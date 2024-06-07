@@ -4,12 +4,10 @@ import Home from "../pages/Home";
 import Market from "../pages/Market";
 
 export default function AppRoute() {
-    const URL = "crypto-market";
-
     return (
         <Routes>
-            <Route path = {URL} Component = {Home}/>
-            <Route path = {URL + '/:id'} Component = {Market}/>
+            <Route path = "/" Component = {Home}/>
+            <Route path = "/:id" Component = {Market}/>
         </Routes>
     );
 }
