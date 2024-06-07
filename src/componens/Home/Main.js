@@ -22,22 +22,21 @@ export default function Main(){
     ];
 
     const getSummaries = async () => {
-        try {
-            const result = await axios.get('summaries')
-            setTicker(result.data.tickers);
-            setPrice(result.data.prices_24h);
-            setLoading(false);
-        } catch(e) {
-            console.log(e.message);
-        }
+        const result = await axios.get('summaries')
+        setTicker(result.data.tickers);
+        setPrice(result.data.prices_24h);
     };
 
     const getPairs = async () => {
+        const result = await axios.get('pairs', {mode:'cors'})
+        setPairs((result.data).filter(pair => pair.base_currency === "idr"));
+    };
+
+    const fetchData = async () => {
         try {
-            const result = await axios.get('pairs', {mode:'cors'})
-            setPairs((result.data).filter(pair => pair.base_currency === "idr"));
+            await Promise.all([getSummaries(), getPairs()]);
             setLoading(false);
-        } catch(e) {
+        } catch (e) {
             console.log(e.message);
         }
     };
@@ -52,7 +51,6 @@ export default function Main(){
     };
 
     const handleSorting = (e) => {
-        setLoading(true);
         const property = e.target.value;
 
         const sortingFunctions = {
@@ -72,8 +70,7 @@ export default function Main(){
     };
 
     useEffect(() => {
-        getSummaries();
-        getPairs();
+        fetchData();
 
         const interval = setInterval(() => {
             getSummaries();

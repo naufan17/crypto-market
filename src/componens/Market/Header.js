@@ -58,7 +58,7 @@ export default function Header(id){
                             <div className="flex col-span-2 sm:col-auto items-center justify-center w-14 h-14 rounded-full bg-indigo-100 sm:w-16 sm:h-16">
                                 <img alt="profil" src={pairs[0].url_logo} className="mx-auto object-cover rounded-full w-14 h-14 sm:w-16 sm:h-16"/>
                             </div>
-                            <div className="flex items-center ">
+                            <div className="flex items-center">
                                 <h3 className="text-lg font-semibold sm:text-xl leading-5">{pairs[0].description}</h3>
                                 {/* <h3 className="text-base my-0.5 font-medium sm:text-lg text-gray-900">{ticker.name}</h3> */}
                             </div>
