@@ -51,14 +51,12 @@ export default function Header(id){
             ) : (
                 <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
                     <div className="flex flex-col sm:flex-row mt-4 sm:mt-8 justify-between lg:items-center">
-                        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
-                            <div className="flex col-span-2 sm:col-auto items-center justify-center w-14 h-14 rounded-full bg-indigo-100 sm:w-16 sm:h-16">
+                        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 mb-2 sm:mb-0">
+                            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-indigo-100 sm:w-16 sm:h-16">
                                 <img alt="profil" src={pairs[0].url_logo} className="mx-auto object-cover rounded-full w-14 h-14 sm:w-16 sm:h-16"/>
                             </div>
-                            <div className="flex items-center">
+                            <div className="flex gap-2 col-span-2 items-center justify-auto">
                                 <h3 className="text-lg font-semibold sm:text-xl leading-5">{pairs[0].description}</h3>
-                            </div>
-                            <div className="flex items-center justify-auto">
                                 <PriceHR price_24h={((ticker.last - price[pairs[0].id]) / price[pairs[0].id] * 100).toFixed(2)}/>
                             </div>
                         </div>
