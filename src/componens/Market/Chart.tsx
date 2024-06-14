@@ -40,7 +40,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
                 },
                 timeScale: {
                     borderVisible: false,
-                    tickMarkFormatter: (time: any, locale: string) => {
+                    tickMarkFormatter: (time: number, locale: string) => {
                         const date = new Date(time * 1000);
                         return date.toLocaleString(locale, {
                             hour: '2-digit',
@@ -120,7 +120,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
     }, [chartData]);
 
     return (
-        <div className="relative px-4 py-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-24">
+        <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
             <div ref={chartContainerRef} style={{ width: '100%', height: '400px' }} />
         </div>
     );

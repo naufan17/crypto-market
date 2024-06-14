@@ -4,7 +4,7 @@ import Main from '../componens/Home/Home';
 
 const Home: React.FC = () => {      
     return (
-        <div className="bg-gradient-to-r from-indigo-100">
+        <div className="bg-gradient-to-r from-indigo-100 min-h-screen">
             <Header/>
             <Main/>
         </div>

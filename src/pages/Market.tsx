@@ -7,7 +7,7 @@ const Market: React.FC = () => {
     const {id} = useParams();
       
     return (
-        <div className="bg-gradient-to-r from-indigo-100">
+        <div className="bg-gradient-to-r from-indigo-100 min-h-screen">
             <Header id = {id}/>
             <Main id = {id}/>
         </div>
