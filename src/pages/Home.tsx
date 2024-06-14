@@ -1,8 +1,8 @@
-import { React } from 'react';
+import React from 'react';
 import Header from '../componens/Home/Header';
-import Main from '../componens/Home/Main';
+import Main from '../componens/Home/Home';
 
-export default function Home() {      
+const Home: React.FC = () => {      
     return (
         <div className="bg-gradient-to-r from-indigo-100">
             <Header/>
@@ -10,3 +10,5 @@ export default function Home() {
         </div>
     );
 }
+
+export default Home;

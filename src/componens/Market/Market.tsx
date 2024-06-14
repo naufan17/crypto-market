@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Loading from '../Loading'
-import Chart from './Chart'
+import Loading from '../Loading/Loading';
+import Chart from './Chart';
 
-export default function Main(id){
-    const [data, setData] = useState(null);
+interface MarketProps {
+    id?: string;
+}
+
+interface WebSocketData {
+    result: {
+        data: {
+            data: [number, number, number, string][];
+        };
+    };
+}
+
+const Market: React.FC<MarketProps> = ({ id }) => {
+    const [data, setData] = useState<WebSocketData | null>(null);
   
     useEffect(() => {
         const newSocket = new WebSocket('wss://ws3.indodax.com/ws/');
@@ -31,7 +43,7 @@ export default function Main(id){
         };
     }, []);
   
-    const sendRequest = (newSocket) => {
+    const sendRequest = (newSocket: WebSocket) => {
         const authRequest = {
             "params": {
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NDY2MTg0MTV9.UR1lBM6Eqh0yWz-PVirw1uPCxe60FdchR8eNVdsskeo"
@@ -45,11 +57,11 @@ export default function Main(id){
         }
     };
 
-    const subscribeToChannel = (newSocket) => {
+    const subscribeToChannel = (newSocket: WebSocket) => {
         const subscribeRequest = {
             "method": 1,
             "params": {
-                "channel": `chart:tick-${id.id}`
+                "channel": `chart:tick-${id}`
             },
             "id": 2
         };
@@ -62,10 +74,14 @@ export default function Main(id){
     return (
         <div>
             {data ? (
-                <Chart data={data} />
+                <Chart 
+                    data={data} 
+                />
             ) : (
                 <Loading />
             )}
       </div>
     );
 }
+
+export default Market;

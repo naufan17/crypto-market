@@ -1,19 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createChart } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 
-const Chart = ({ data }) => {
-    const chartContainerRef = useRef(null);
-    const chartInstanceRef = useRef(null);
-    const areaSeriesRef = useRef(null);
-    const [chartData, setChartData] = useState([]);
+interface ChartProps {
+    data: {
+        result: {
+            data: {
+                data: [number, number, number, string][];
+            };
+        };
+    };
+}
+
+interface ChartDataPoint {
+    time: number | Time;
+    value: number;
+}
+
+const Chart: React.FC<ChartProps> = ({ data }) => {
+    const chartContainerRef = useRef<HTMLDivElement | null>(null);
+    const chartInstanceRef = useRef<IChartApi | null>(null);
+    const areaSeriesRef = useRef<ISeriesApi<'Area'> | null>(null);
+    const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
 
     useEffect(() => {
         const createChartInstance = () => {
-            const chart = createChart(chartContainerRef.current, {
-                width: chartContainerRef.current.clientWidth,
+            const chart = createChart(chartContainerRef.current!, {
+                width: chartContainerRef.current!.clientWidth,
                 height: 400,
                 layout: {
-                    background: { type: 'solid', color: 'transparent' },
+                    background: { color: 'transparent' },
                     textColor: 'rgb(3 7 18)',
                 },
                 grid: {
@@ -25,7 +40,7 @@ const Chart = ({ data }) => {
                 },
                 timeScale: {
                     borderVisible: false,
-                    tickMarkFormatter: (time, locale) => {
+                    tickMarkFormatter: (time: any, locale: string) => {
                         const date = new Date(time * 1000);
                         return date.toLocaleString(locale, {
                             hour: '2-digit',
@@ -47,7 +62,7 @@ const Chart = ({ data }) => {
 
             const handleResize = () => {
                 if (chartInstanceRef.current) {
-                    chartInstanceRef.current.resize(chartContainerRef.current.clientWidth, 400);
+                    chartInstanceRef.current.resize(chartContainerRef.current!.clientWidth, 400);
                 }
             };
             window.addEventListener('resize', handleResize);
@@ -62,17 +77,18 @@ const Chart = ({ data }) => {
             };
         };
 
-        const updateChartData = (newData) => {
-            const newChartData = newData.result.data.data.map(([timestamp, , price]) => ({
+        const updateChartData = (newData: any) => {
+            const newChartData = newData.result.data.data.map(([timestamp, , price]: [number, number, string]) => ({
                 time: timestamp,
                 value: parseFloat(price),
             }));
 
             setChartData(prevData => {
                 const mergedData = [...prevData, ...newChartData];
-                const uniqueData = Array.from(new Set(mergedData.map(d => d.time))).map(time => mergedData.find(d => d.time === time));
-                uniqueData.sort((a, b) => a.time - b.time);
-                return uniqueData;
+                const uniqueData = Array.from(new Set(mergedData.map(d => d.time)))
+                    .map(time => mergedData.find(d => d.time === time))
+                    .sort((a, b) => a.time - b.time);
+                return uniqueData as ChartDataPoint[];
             });
         };
 
@@ -95,7 +111,11 @@ const Chart = ({ data }) => {
 
     useEffect(() => {
         if (areaSeriesRef.current) {
-            areaSeriesRef.current.setData(chartData);
+            const areaData = chartData.map(point => ({
+                time: point.time as Time,
+                value: point.value,
+            }));
+            areaSeriesRef.current.setData(areaData);        
         }
     }, [chartData]);
 

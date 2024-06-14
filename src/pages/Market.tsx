@@ -1,9 +1,9 @@
-import { React } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../componens/Market/Header';
-import Main from '../componens/Market/Main';
+import Main from '../componens/Market/Market';
 
-export default function Market() {
+const Market: React.FC = () => {
     const {id} = useParams();
       
     return (
@@ -13,3 +13,5 @@ export default function Market() {
         </div>
     );
 }
+
+export default Market;
