@@ -65,10 +65,12 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
           chartInstanceRef.current.resize(chartContainerRef.current!.clientWidth, 400);
         }
       };
+
       window.addEventListener('resize', handleResize);
 
       return () => {
         window.removeEventListener('resize', handleResize);
+
         if (chartInstanceRef.current) {
           chartInstanceRef.current.remove();
           chartInstanceRef.current = null;
@@ -115,6 +117,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
         time: point.time as Time,
         value: point.value,
       }));
+      
       areaSeriesRef.current.setData(areaData);        
     }
   }, [chartData]);
