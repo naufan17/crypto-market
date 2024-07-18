@@ -81,6 +81,7 @@ const Home: React.FC = () => {
 
     const interval = setInterval(getSummaries, 2000);
     return () => clearInterval(interval)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

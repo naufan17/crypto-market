@@ -44,7 +44,8 @@ const Header: React.FC<HeaderProps> = ({ id }) => {
 
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval)
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (isLoading) {
     return <Loading/>
