@@ -34,8 +34,8 @@ const Header: React.FC<HeaderProps> = ({ id }) => {
       setTicker(tickerResult.ticker);
       setPairs(pairResult.filter((pair: Pair) => pair.id === id));
       setLoading(false);
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.log('Error fetching data', err);    
     }
   };
 
@@ -43,7 +43,6 @@ const Header: React.FC<HeaderProps> = ({ id }) => {
     fetchData();
 
     const interval = setInterval(fetchData, 2000);
-
     return () => clearInterval(interval)
   }, []);
 

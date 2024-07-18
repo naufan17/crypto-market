@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Loading from '../Common/Loading';
 import Chart from './Chart';
 
-interface MarketProps {
-  id?: string;
-}
-
 interface WebSocketData {
   result: {
     data: {
       data: [number, number, number, string][];
     };
   };
+}
+
+interface MarketProps {
+  id?: string;
 }
 
 const Market: React.FC<MarketProps> = ({ id }) => {

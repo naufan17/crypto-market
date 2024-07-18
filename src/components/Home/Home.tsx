@@ -26,12 +26,20 @@ const Home: React.FC = () => {
     { value: 'volumeTinggi', label: 'Volume Tinggi' }
   ];
 
+  const getSummaries = async () => {
+    const result = await getSummary();
+    setTicker(result.tickers);
+    setPrice(result.prices_24h);        
+  };
+
+  const getPairs = async () => {
+    const result = await getPair();
+    setPairs(result.filter((pair: Pair) => pair.base_currency === 'idr'));        
+  };
+
   const fetchData = async () => {
     try {
-      const [summaryResult, pairsResult] = await Promise.all([getSummary(), getPair()]);
-      setTicker(summaryResult.tickers);
-      setPrice(summaryResult.prices_24h);
-      setPairs(pairsResult.filter((pair: Pair) => pair.base_currency === 'idr'));
+      await Promise.all([getSummaries(), getPairs()]);
       setLoading(false);
     } catch (err) {
       console.log('Error fetching summaries and pairs', err);    
@@ -41,7 +49,7 @@ const Home: React.FC = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     if (keyword === '') {
-      fetchData();
+      getPairs();
     } else {
       setPairs(pairs.filter((pair: Pair) => ticker[pair.ticker_id].name.toLowerCase().includes((keyword).toLowerCase())));
     };
@@ -62,7 +70,7 @@ const Home: React.FC = () => {
     };
 
     if (property === '') {
-      fetchData();
+      getPairs();
     } else {
       setPairs([...pairs].sort(sortingFunctions[property]));                
     }
@@ -71,7 +79,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchData();
 
-    const interval = setInterval(fetchData, 2000);
+    const interval = setInterval(getSummaries, 2000);
     return () => clearInterval(interval)
   }, []);
 
@@ -89,6 +97,8 @@ const Home: React.FC = () => {
               key={index}
               id = {item.id}
               url_logo = {item.url_logo}
+              maintenance = {item.is_maintenance}
+              suspended = {item.is_market_suspended}
               description = {item.description}
               name = {ticker[item.ticker_id].name }
               price={ticker[item.ticker_id]?.last.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}

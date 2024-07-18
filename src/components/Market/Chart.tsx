@@ -86,8 +86,8 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
       setChartData(prevData => {
         const mergedData = [...prevData, ...newChartData];
         const uniqueData = Array.from(new Set(mergedData.map(d => d.time)))
-                          .map(time => mergedData.find(d => d.time === time))
-                          .sort((a, b) => a.time - b.time);
+          .map(time => mergedData.find(d => d.time === time))
+          .sort((a, b) => a.time - b.time);
         return uniqueData as ChartDataPoint[];
       });
     };
@@ -120,9 +120,9 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
   }, [chartData]);
 
   return (
-  <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-    <div ref={chartContainerRef} style={{ width: '100%', height: '400px' }} />
-  </div>
+    <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
+      <div ref={chartContainerRef} style={{ width: '100%', height: '400px' }} />
+    </div>
   );
 };
 
