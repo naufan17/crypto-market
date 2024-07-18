@@ -1,0 +1,105 @@
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import { getSummary } from '../../api/summaries';
+import { getPair } from '../../api/pairs';
+import { Pair } from '../../interfaces/pairs';
+import { Ticker, Price } from '../../interfaces/summaries';
+import InputSearch from '../Common/InputSearch';
+import Option from '../Common/Option';
+import SkeletonCard from './Card/SkeletonCard'
+import Card from './Card/Card';
+
+const Home: React.FC = () => {
+  const [ticker, setTicker] = useState<Ticker>({});
+  const [price, setPrice] = useState<Price>({});
+  const [pairs, setPairs] = useState<Pair[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const loopLoading = Array.from({ length: 8 });
+  const sortingOptions: {value: string; label: string}[] = [
+    { value: '', label: 'Urutkan' },
+    { value: 'namaAZ', label: 'Nama A-Z' },
+    { value: 'namaZA', label: 'Nama Z-A' },
+    { value: 'trenNaik', label: 'Tren Harga Naik' },
+    { value: 'trenTurun', label: 'Tren Harga Turun' },
+    { value: 'hargaRendah', label: 'Harga Rendah' },
+    { value: 'hargaTinggi', label: 'Harga Tinggi' },
+    { value: 'volumeRendah', label: 'Volume Rendah' },
+    { value: 'volumeTinggi', label: 'Volume Tinggi' }
+  ];
+
+  const fetchData = async () => {
+    try {
+      const [summaryResult, pairsResult] = await Promise.all([getSummary(), getPair()]);
+      setTicker(summaryResult.tickers);
+      setPrice(summaryResult.prices_24h);
+      setPairs(pairsResult.filter((pair: Pair) => pair.base_currency === 'idr'));
+      setLoading(false);
+    } catch (err) {
+      console.log('Error fetching summaries and pairs', err);    
+    }
+  };
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const keyword = e.target.value;
+    if (keyword === '') {
+      fetchData();
+    } else {
+      setPairs(pairs.filter((pair: Pair) => ticker[pair.ticker_id].name.toLowerCase().includes((keyword).toLowerCase())));
+    };
+  };
+
+  const handleSorting = (e: ChangeEvent<HTMLSelectElement>) => {
+    const property = e.target.value;
+
+    const sortingFunctions: { [key: string]: (a: Pair, b: Pair) => number} = {
+      'namaAZ': (a, b) => a.id.localeCompare(b.id),
+      'namaZA': (a, b) => b.id.localeCompare(a.id),
+      'trenTurun': (a, b) => ((ticker[a.ticker_id].last - price[a.id]) / price[a.id]) - ((ticker[b.ticker_id].last - price[b.id]) / price[b.id]),
+      'trenNaik': (a, b) => ((ticker[b.ticker_id].last - price[b.id]) / price[b.id]) - ((ticker[a.ticker_id].last - price[a.id]) / price[a.id]),
+      'hargaRendah': (a, b) => ticker[a.ticker_id].last - ticker[b.ticker_id].last,
+      'hargaTinggi': (a, b) => ticker[b.ticker_id].last - ticker[a.ticker_id].last,
+      'volumeRendah': (a, b) => ticker[a.ticker_id].vol_idr - ticker[b.ticker_id].vol_idr,
+      'volumeTinggi': (a, b) => ticker[b.ticker_id].vol_idr - ticker[a.ticker_id].vol_idr,
+    };
+
+    if (property === '') {
+      fetchData();
+    } else {
+      setPairs([...pairs].sort(sortingFunctions[property]));                
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval)
+  }, []);
+
+  return (
+    <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
+      <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
+        <InputSearch handleSearch={handleSearch} placeholder={"Cari nama kripto"}/>
+        <Option handleSorting={handleSorting} options={sortingOptions}/>
+      </div>
+      <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {loading 
+          ? loopLoading.map((_, index) => <SkeletonCard key={index}/>)
+          : pairs.map((item, index) => (
+            <Card
+              key={index}
+              id = {item.id}
+              url_logo = {item.url_logo}
+              description = {item.description}
+              name = {ticker[item.ticker_id].name }
+              price={ticker[item.ticker_id]?.last.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+              price_24h={(((ticker[item.ticker_id]?.last - price[item.id]) / price[item.id]) * 100).toFixed(2)}
+              volume={ticker[item.ticker_id]?.vol_idr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+            />
+          ))
+        }
+      </div>
+    </div>
+  )
+}
+
+export default Home

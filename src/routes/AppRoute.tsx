@@ -5,13 +5,13 @@ import Market from "../pages/Market";
 import NotFound from "../pages/NotFound"
 
 const AppRoute: React.FC = () => {
-    return (
-        <Routes>
-            <Route path = "/" element = {<Home/>}/>
-            <Route path = "/:id" element = {<Market/>}/>
-            <Route path = "*" element = {<NotFound/>}/>
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route path = "/" element = {<Home/>}/>
+      <Route path = "/:id" element = {<Market/>}/>
+      <Route path = "*" element = {<NotFound/>}/>
+    </Routes>
+  );
 }
 
 export default AppRoute;
