@@ -1,5 +1,5 @@
 import axiosInstance from "../config/Api";
-import { Pair } from '../interfaces/pairs';
+import { Pair } from '../interfaces/Pairs';
 
 export const getPair = async (): Promise<Pair[]> => {
   try {

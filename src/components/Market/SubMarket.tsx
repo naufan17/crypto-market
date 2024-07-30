@@ -2,18 +2,18 @@ import React, {useEffect, useState} from 'react';
 import { getPair } from '../../api/pairs';
 import { getSummary } from '../../api/summaries';
 import { getTicker } from '../../api/tickers';
-import { Pair } from '../../interfaces/pairs';
-import { Price } from '../../interfaces/summaries';
-import { Ticker } from '../../interfaces/tickers';
+import { Pair } from '../../interfaces/Pairs';
+import { Price } from '../../interfaces/Summaries';
+import { Ticker } from '../../interfaces/Tickers';
 import PriceHR from './PriceHR';
-import Loading from '../Common/Loading'
-import NotFound from '../Common/NotFound';
+import Loading from '../common/Loading'
+import Header from '../common/Header';
 
 interface HeaderProps {
   id?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ id }) => {
+const SubMarket: React.FC<HeaderProps> = ({ id }) => {
   const [ticker, setTicker] = useState<Ticker | null>(null);
   const [price, setPrice] = useState<Price>({});
   const [pairs, setPairs] = useState<Pair[]>([]);
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ id }) => {
   }
 
   if (!ticker || pairs.length === 0) {
-    return <NotFound title={'Not Available'}/>
+    return <Header title={'Not Available'}/>
   }
 
   return (
@@ -84,4 +84,4 @@ const Header: React.FC<HeaderProps> = ({ id }) => {
   );
 }
 
-export default Header;
+export default SubMarket;

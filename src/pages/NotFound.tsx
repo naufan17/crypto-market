@@ -1,10 +1,10 @@
 import React from 'react';
-import Main from '../components/Common/NotFound';
+import Header from '../components/common/Header';
 
 const NotFound: React.FC = () => {      
   return (
     <div className="bg-gradient-to-r from-indigo-100 min-h-screen">
-      <Main title={'Page Not Found'}/>
+      <Header title={'Page Not Found'}/>
     </div>
   );
 }

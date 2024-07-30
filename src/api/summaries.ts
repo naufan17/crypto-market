@@ -1,5 +1,5 @@
 import axiosInstance from "../config/Api";
-import { Summary } from "../interfaces/summaries";
+import { Summary } from "../interfaces/Summaries";
 
 export const getSummary = async (): Promise<Summary> => {
   try {

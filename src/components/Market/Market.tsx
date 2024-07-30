@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Loading from '../Common/Loading';
+import Loading from '../common/Loading';
 import Chart from './Chart';
 
 interface WebSocketData {

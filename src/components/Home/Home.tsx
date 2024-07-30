@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import { getSummary } from '../../api/summaries';
 import { getPair } from '../../api/pairs';
-import { Pair } from '../../interfaces/pairs';
-import { Ticker, Price } from '../../interfaces/summaries';
-import InputSearch from '../Common/InputSearch';
-import Option from '../Common/Option';
-import SkeletonCard from './Card/SkeletonCard'
-import Card from './Card/Card';
+import { Pair } from '../../interfaces/Pairs';
+import { Ticker, Price } from '../../interfaces/Summaries';
+import InputSearch from '../common/InputSearch';
+import Option from '../common/Option';
+import SkeletonCard from './card/SkeletonCard'
+import Card from './card/Card';
 
 const Home: React.FC = () => {
   const [ticker, setTicker] = useState<Ticker>({});

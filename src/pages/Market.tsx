@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Market/Header';
-import Main from '../components/Market/Market';
+import SubMarket from '../components/market/SubMarket';
+import Main from '../components/market/Market';
 
 const Market: React.FC = () => {
   const {id} = useParams();
 
   return (
     <div className="bg-gradient-to-r from-indigo-100 min-h-screen">
-      <Header id = {id}/>
+      <SubMarket id = {id}/>
       <Main id = {id}/>
     </div>
   );
