@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { WebSocketData } from '../../interfaces/WebSocketData';
-import Chart from './Chart';
-import Loading from '../ui/Loading';
+import Chart from '../market/Chart';
+import Loading from '../common/Loading';
 
 interface MarketProps {
   id?: string;
@@ -34,7 +34,6 @@ const Market: React.FC<MarketProps> = ({ id }) => {
     return () => {
       newSocket.close();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sendRequest = (newSocket: WebSocket) => {

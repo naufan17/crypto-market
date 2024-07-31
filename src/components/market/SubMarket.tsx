@@ -6,8 +6,8 @@ import { Pair } from '../../interfaces/Pairs';
 import { Price } from '../../interfaces/Summaries';
 import { Ticker } from '../../interfaces/Ticker';
 import PriceHR from './PriceHR';
-import Header from '../ui/Header';
-import Loading from '../ui/Loading';
+import Header from '../common/Header';
+import Loading from '../common/Loading';
 
 interface HeaderProps {
   id?: string;
@@ -45,8 +45,7 @@ const SubMarket: React.FC<HeaderProps> = ({ id }) => {
 
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, []);
 
   if (isLoading) {
     return <Loading/>

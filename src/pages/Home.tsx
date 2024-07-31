@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/ui/Header';
-import Main from '../components/base/home/Home';
+import Header from '../components/common/Header';
+import Main from '../components/home/Home';
 
 const Home: React.FC = () => {      
   return (

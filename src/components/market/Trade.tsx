@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { getTrade } from "../../api/trade";
 import { TradeData } from "../../interfaces/Trade";
-import Loading from '../ui/Loading';
+import Loading from '../common/Loading';
 
 interface TradeProps {
   id?: string;
@@ -28,8 +28,7 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
 
     const interval = setInterval(getTrades, 2000);
     return () => clearInterval(interval)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
