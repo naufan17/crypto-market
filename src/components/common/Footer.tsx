@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
   return (
     <footer>
       <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-        <div className="flex flex-col sm:flex-row mb-4 sm:mb-8 justify-end lg:items-center">
+        <div className="flex flex-col sm:flex-row mb-4 sm:mb-8 justify-center lg:items-center">
           <div>
             <p className="mb-2 lg:mb-4 text-sm sm:text-base font-sans">
               Data Provided by Indodax
