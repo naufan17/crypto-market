@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
+import { ChartDataPoint } from '../../interfaces/ChartDataPoint';
 
 interface ChartProps {
   data: {
@@ -9,11 +10,6 @@ interface ChartProps {
       };
     };
   };
-}
-
-interface ChartDataPoint {
-  time: number | Time;
-  value: number;
 }
 
 const Chart: React.FC<ChartProps> = ({ data }) => {

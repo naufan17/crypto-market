@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getSummary } from '../../api/summaries';
 import { getPair } from '../../api/pairs';
 import { Pair } from '../../interfaces/Pairs';

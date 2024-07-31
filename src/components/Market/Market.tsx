@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Loading from '../common/Loading';
+import { WebSocketData } from '../../interfaces/WebSocketData';
 import Chart from './Chart';
-
-interface WebSocketData {
-  result: {
-    data: {
-      data: [number, number, number, string][];
-    };
-  };
-}
+import Loading from '../common/Loading';
 
 interface MarketProps {
   id?: string;
