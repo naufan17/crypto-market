@@ -4,7 +4,7 @@ import { getSummary } from '../../api/summaries';
 import { getTicker } from '../../api/tickers';
 import { Pair } from '../../interfaces/Pairs';
 import { Price } from '../../interfaces/Summaries';
-import { Ticker } from '../../interfaces/Tickers';
+import { Ticker } from '../../interfaces/Ticker';
 import PriceHR from './PriceHR';
 import Header from '../common/Header';
 import Loading from '../common/Loading';
