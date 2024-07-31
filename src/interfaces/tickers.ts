@@ -3,6 +3,6 @@ export interface Ticker {
   vol_idr: number;
 }
 
-export interface Tickers {
-  ticker: Tickers
+export interface TickerData {
+  ticker: Ticker
 }

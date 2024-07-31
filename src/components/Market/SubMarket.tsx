@@ -6,8 +6,8 @@ import { Pair } from '../../interfaces/Pairs';
 import { Price } from '../../interfaces/Summaries';
 import { Ticker } from '../../interfaces/Tickers';
 import PriceHR from './PriceHR';
-import Loading from '../common/Loading'
 import Header from '../common/Header';
+import Loading from '../common/Loading';
 
 interface HeaderProps {
   id?: string;
@@ -33,9 +33,10 @@ const SubMarket: React.FC<HeaderProps> = ({ id }) => {
       setPrice(priceResult.prices_24h);
       setTicker(tickerResult.ticker);
       setPairs(pairResult.filter((pair: Pair) => pair.id === id));
-      setLoading(false);
     } catch (err) {
-      console.log('Error fetching data', err);    
+      console.log('Error fetching data summary, ticker and pair', err);    
+    } finally {
+      setLoading(false);
     }
   };
 

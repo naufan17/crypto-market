@@ -1,6 +1,7 @@
 import axiosInstance from "../config/Api";
+import { TickerData } from "../interfaces/Tickers";
 
-export const getTicker = async (id: string | undefined) => {
+export const getTicker = async (id: string | undefined): Promise<TickerData> => {
   try {
     const result = await axiosInstance.get(`/ticker/${id}`);
     return result.data;

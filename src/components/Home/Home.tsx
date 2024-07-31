@@ -40,9 +40,10 @@ const Home: React.FC = () => {
   const fetchData = async () => {
     try {
       await Promise.all([getSummaries(), getPairs()]);
-      setLoading(false);
     } catch (err) {
       console.log('Error fetching summaries and pairs', err);    
+    } finally {
+      setLoading(false);
     }
   };
 
