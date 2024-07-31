@@ -34,6 +34,7 @@ const Market: React.FC<MarketProps> = ({ id }) => {
     return () => {
       newSocket.close();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sendRequest = (newSocket: WebSocket) => {
