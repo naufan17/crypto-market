@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getSummary } from '../../api/summaries';
-import { getPair } from '../../api/pairs';
-import { Pair } from '../../interfaces/Pairs';
-import { Ticker, Price } from '../../interfaces/Summaries';
-import InputSearch from '../ui/InputSearch';
-import Option from '../ui/Option';
+import { getSummary } from '../../../api/summaries';
+import { getPair } from '../../../api/pairs';
+import { Pair } from '../../../interfaces/Pairs';
+import { Ticker, Price } from '../../../interfaces/Summaries';
+import InputSearch from '../../ui/InputSearch';
+import Option from '../../ui/Option';
 import SkeletonCard from './card/SkeletonCard'
 import Card from './card/Card';
 
