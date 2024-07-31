@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/common/Header';
 import Main from '../components/home/Home';
+import Footer from '../components/common/Footer';
 
 const Home: React.FC = () => {      
   return (
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
         subtitle='Dapatkan update kenaikan dan penurunan harga kripto secara realtime. Terdapat lebih dari 200 kripto yang dapat dipantau'
       />
       <Main/>
+      <Footer/>
     </div>
   );
 }

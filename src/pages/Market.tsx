@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import SubMarket from '../components/market/SubMarket';
 import Main from '../components/market/Market';
 import Trade from '../components/market/Trade';
+import Footer from '../components/common/Footer';
 
 const Market: React.FC = () => {
   const {id} = useParams();
@@ -12,6 +13,7 @@ const Market: React.FC = () => {
       <SubMarket id = {id}/>
       <Main id = {id}/>
       <Trade id = {id}/>
+      <Footer/>
     </div>
   );
 }
