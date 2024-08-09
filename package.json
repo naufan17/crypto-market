@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.7",
     "axios": "^0.27.2",
+    "crypto-market": "file:",
     "date-fns": "^3.6.0",
     "lightweight-charts": "^4.1.4",
     "react": "^18.3.1",

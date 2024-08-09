@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { getTrade } from "../../api/trade";
-import { TradeData } from "../../interfaces/Trade";
-import Loading from '../common/Loading';
+import { getTrade } from "../../../api/trade";
+import { TradeData } from "../../../interfaces/Trade";
+import Loading from '../../../components/common/Loading';
 
 interface TradeProps {
   id?: string;

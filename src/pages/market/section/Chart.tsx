@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
-import { ChartDataPoint } from '../../interfaces/ChartDataPoint';
+import { ChartDataPoint } from '../../../interfaces/ChartDataPoint';
 
 interface ChartProps {
   data: {
@@ -75,6 +75,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
       };
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateChartData = (newData: any) => {
       const newChartData = newData.result.data.data.map(([timestamp, , price]: [number, number, string]) => ({
         time: timestamp,

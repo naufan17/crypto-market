@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getPair } from '../../api/pairs';
-import { getSummary } from '../../api/summaries';
-import { getTicker } from '../../api/tickers';
-import { Pair } from '../../interfaces/Pairs';
-import { Price } from '../../interfaces/Summaries';
-import { Ticker } from '../../interfaces/Ticker';
-import SubMarketSkeleton from './SubMarketSkeleton';
+import { getPair } from '../../../../api/pairs';
+import { getSummary } from '../../../../api/summaries';
+import { getTicker } from '../../../../api/tickers';
+import { Pair } from '../../../../interfaces/Pairs';
+import { Price } from '../../../../interfaces/Summaries';
+import { Ticker } from '../../../../interfaces/Ticker';
+import Header from '../../../../components/common/Header';
+import Skeleton from './Skeleton';
 import PriceHR from './PriceHR';
-import Header from '../common/Header';
 
 interface HeaderProps {
   id?: string;
@@ -49,7 +49,7 @@ const SubMarket: React.FC<HeaderProps> = ({ id }) => {
   }, []);
 
   if (isLoading) {
-    return <SubMarketSkeleton/>
+    return <Skeleton/>
   }
 
   if (!ticker || pairs.length === 0) {

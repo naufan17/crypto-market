@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getSummary } from '../../api/summaries';
-import { getPair } from '../../api/pairs';
-import { Pair } from '../../interfaces/Pairs';
-import { Ticker, Price } from '../../interfaces/Summaries';
-import InputSearch from '../common/InputSearch';
-import Option from '../common/Option';
-import SkeletonCard from './card/SkeletonCard'
+import { getSummary } from '../../../api/summaries';
+import { getPair } from '../../../api/pairs';
+import { Pair } from '../../../interfaces/Pairs';
+import { Ticker, Price } from '../../../interfaces/Summaries';
+import InputSearch from '../../../components/common/InputSearch';
+import Option from '../../../components/common/Option';
+import Skeleton from './card/Skeleton';
 import Card from './card/Card';
 
-const Home: React.FC = () => {
+const Main: React.FC = () => {
   const [ticker, setTicker] = useState<Ticker>({});
   const [price, setPrice] = useState<Price>({});
   const [pairs, setPairs] = useState<Pair[]>([]);
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
       </div>
       <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading 
-          ? loopLoading.map((_, index) => <SkeletonCard key={index}/>)
+          ? loopLoading.map((_, index) => <Skeleton key={index}/>)
           : pairs.map((item, index) => (
             <Card
               key={index}
@@ -114,4 +114,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home;
+export default Main;

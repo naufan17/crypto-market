@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/common/Header';
-import Main from '../components/home/Home';
-import Footer from '../components/common/Footer';
+import Header from '../../components/common/Header';
+import Main from './section/Main';
+import Footer from '../../components/common/Footer';
 
 const Home: React.FC = () => {      
   return (
