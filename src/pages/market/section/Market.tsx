@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { WebSocketData } from '../../../interfaces/WebSocketData';
+import { WebSocketData } from '../../../types/WebSocketData';
 import Chart from './Chart';
-import Loading from '../../../components/common/Loading';
+import Loading from '../../../components/ui/Loading';
 
 interface MarketProps {
   id?: string;
@@ -40,7 +40,7 @@ const Market: React.FC<MarketProps> = ({ id }) => {
   const sendRequest = (newSocket: WebSocket) => {
     const authRequest = {
       "params": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NDY2MTg0MTV9.UR1lBM6Eqh0yWz-PVirw1uPCxe60FdchR8eNVdsskeo"
+        "token": process.env.REACT_APP_SOCKET_TOKEN
       },
       "id": 1
     };

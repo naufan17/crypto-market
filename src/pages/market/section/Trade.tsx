@@ -1,38 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
-import { getTrade } from "../../../api/trade";
-import { TradeData } from "../../../interfaces/Trade";
-import Loading from '../../../components/common/Loading';
+import Skeleton from './trade/Skeleton';
+import { RootState, AppDispatch } from '../../../store';
+import { fetchTrades } from '../../../features/tradeCrypto/tradeCryptoThunk';
 
 interface TradeProps {
   id?: string;
 }
 
 const Trade: React.FC<TradeProps> = ({ id }) => {
-  const [trade, setTrade] = useState<TradeData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const getTrades = async () => {
-    try {
-      const result = await getTrade(id);
-      setTrade(result);
-    } catch (err) {
-      console.log('Error fetching trade', err);    
-    } finally {
-      setIsLoading(false);
-    }
-  };
+   const dispatch = useDispatch<AppDispatch>();
+   const { trade, loading } = useSelector((state: RootState) => state.tradeCrypto)
 
   useEffect(() => {
-    getTrades();
+    dispatch(fetchTrades({ id }));
 
-    const interval = setInterval(getTrades, 2000);
+    const interval = setInterval(() => {
+      dispatch(fetchTrades({ id }))
+    }, 2000);
+
     return () => clearInterval(interval)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
-  if (isLoading) {
-    return <Loading />;
+  if (loading) {
+    return <Skeleton/>;
   }
 
   return (

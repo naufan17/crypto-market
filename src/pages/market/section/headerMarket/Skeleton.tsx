@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SubMarketSkeleton: React.FC = () => {
+const Skeleton: React.FC = () => {
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
       <div className="animate-pulse">
@@ -19,4 +19,4 @@ const SubMarketSkeleton: React.FC = () => {
   );
 }
 
-export default SubMarketSkeleton;
+export default Skeleton;

@@ -1,5 +1,5 @@
-import axiosInstance from "../config/Api";
-import { TickerData } from "../interfaces/Ticker";
+import axiosInstance from "../config/api";
+import { TickerData } from "../types/Ticker";
 
 export const getTicker = async (id: string | undefined): Promise<TickerData> => {
   try {

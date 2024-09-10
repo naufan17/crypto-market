@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
-import { ChartDataPoint } from '../../../interfaces/ChartDataPoint';
+import { ChartDataPoint } from '../../../types/ChartDataPoint';
 
 interface ChartProps {
   data: {

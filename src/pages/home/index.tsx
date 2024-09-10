@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../../components/common/Header';
-import Main from './section/Main';
-import Footer from '../../components/common/Footer';
+import Header from '../../components/ui/Header';
+import ListCard from './section/ListCard';
+import Footer from '../../components/ui/Footer';
 
 const Home: React.FC = () => {      
   return (
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
         title='Update Pasar Kripto'
         subtitle='Dapatkan update kenaikan dan penurunan harga kripto secara realtime. Terdapat lebih dari 200 kripto yang dapat dipantau'
       />
-      <Main/>
+      <ListCard/>
       <Footer/>
     </div>
   );

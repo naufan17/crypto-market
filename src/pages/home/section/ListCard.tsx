@@ -1,19 +1,23 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getSummary } from '../../../api/summaries';
-import { getPair } from '../../../api/pairs';
-import { Pair } from '../../../interfaces/Pairs';
-import { Ticker, Price } from '../../../interfaces/Summaries';
-import InputSearch from '../../../components/common/InputSearch';
-import Option from '../../../components/common/Option';
+import React, { ChangeEvent, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Pair } from '../../../types/Pairs';
+import InputSearch from '../../../components/ui/InputSearch';
+import Option from '../../../components/ui/Option';
 import Skeleton from './card/Skeleton';
 import Card from './card/Card';
+import { RootState, AppDispatch } from '../../../store';
+import { fetchSummary, fetchPair } from '../../../features/allCrypto/allCryptoThunk';
+import { setPair } from '../../../features/allCrypto/allCryptoSlice';
 
-const Main: React.FC = () => {
-  const [ticker, setTicker] = useState<Ticker>({});
-  const [price, setPrice] = useState<Price>({});
-  const [pairs, setPairs] = useState<Pair[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const ListCard: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const loopLoading = Array.from({ length: 8 });
+  const {
+    ticker,
+    price,
+    pair,
+    loading
+  } = useSelector((state: RootState) => state.allCrypto);
   const sortingOptions: {value: string; label: string}[] = [
     { value: '', label: 'Urutkan' },
     { value: 'namaAZ', label: 'Nama A-Z' },
@@ -26,33 +30,23 @@ const Main: React.FC = () => {
     { value: 'volumeTinggi', label: 'Volume Tinggi' }
   ];
 
-  const getSummaries = async () => {
-    const result = await getSummary();
-    setTicker(result.tickers);
-    setPrice(result.prices_24h);        
-  };
+  useEffect(() => {
+    dispatch(fetchSummary());
+    dispatch(fetchPair());
 
-  const getPairs = async () => {
-    const result = await getPair();
-    setPairs(result.filter((pair: Pair) => pair.base_currency === 'idr'));        
-  };
+    const interval = setInterval(() => {
+      dispatch(fetchSummary())
+    }, 2000);
 
-  const fetchData = async () => {
-    try {
-      await Promise.all([getSummaries(), getPairs()]);
-    } catch (err) {
-      console.log('Error fetching summaries and pairs', err);    
-    } finally {
-      setLoading(false);
-    }
-  };
+    return () => clearInterval(interval)
+  }, [dispatch]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     if (keyword === '') {
-      getPairs();
+      dispatch(fetchPair());
     } else {
-      setPairs(pairs.filter((pair: Pair) => ticker[pair.ticker_id].name.toLowerCase().includes((keyword).toLowerCase())));
+      dispatch(setPair(pair.filter((pair: Pair) => ticker[pair.ticker_id].name.toLowerCase().includes((keyword).toLowerCase()))));
     };
   };
 
@@ -71,19 +65,12 @@ const Main: React.FC = () => {
     };
 
     if (property === '') {
-      getPairs();
+      dispatch(fetchPair());
     } else {
-      setPairs([...pairs].sort(sortingFunctions[property]));                
+      dispatch(setPair([...pair].sort(sortingFunctions[property])));                
     }
   };
 
-  useEffect(() => {
-    fetchData();
-
-    const interval = setInterval(getSummaries, 2000);
-    return () => clearInterval(interval)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
@@ -94,7 +81,7 @@ const Main: React.FC = () => {
       <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading 
           ? loopLoading.map((_, index) => <Skeleton key={index}/>)
-          : pairs.map((item, index) => (
+          : pair.map((item: Pair, index: number) => (
             <Card
               key={index}
               id = {item.id}
@@ -114,4 +101,4 @@ const Main: React.FC = () => {
   )
 }
 
-export default Main;
+export default ListCard;

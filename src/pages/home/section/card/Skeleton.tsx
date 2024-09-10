@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SkeletonCard: React.FC = () => {
+const Card: React.FC = () => {
   return (
     <div className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">
       <div className="animate-pulse">
@@ -16,4 +16,4 @@ const SkeletonCard: React.FC = () => {
   );
 }
 
-export default SkeletonCard;
+export default Card;

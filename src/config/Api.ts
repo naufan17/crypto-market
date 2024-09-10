@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const axiosInstance = Axios.create({
-	baseURL: "https://indodax.com/api",
+	baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 export default axiosInstance;

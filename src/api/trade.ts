@@ -1,5 +1,5 @@
-import axiosInstance from "../config/Api";
-import { TradeData } from "../interfaces/Trade";
+import axiosInstance from "../config/api";
+import { TradeData } from "../types/Trade";
 
 export const getTrade = async (id: string | undefined): Promise<TradeData[]> => {
   try {
