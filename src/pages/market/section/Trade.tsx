@@ -21,7 +21,7 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
     }, 2000);
 
     return () => clearInterval(interval)
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   if (loading) {
     return <Skeleton/>;
