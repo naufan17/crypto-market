@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 import Skeleton from './trade/Skeleton';
-import { RootState, AppDispatch } from '../../../store';
-import { fetchTrades } from '../../../features/tradeCrypto/tradeCryptoThunk';
+import { RootState, AppDispatch } from '../../../state/store';
+import { fetchTrades } from '../../../state/tradeCrypto/tradeCryptoThunk';
 
 interface TradeProps {
   id?: string;

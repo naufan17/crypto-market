@@ -5,9 +5,9 @@ import InputSearch from '../../../components/ui/InputSearch';
 import Option from '../../../components/ui/Option';
 import Skeleton from './card/Skeleton';
 import Card from './card/Card';
-import { RootState, AppDispatch } from '../../../store';
-import { fetchSummary, fetchPair } from '../../../features/allCrypto/allCryptoThunk';
-import { setPair } from '../../../features/allCrypto/allCryptoSlice';
+import { RootState, AppDispatch } from '../../../state/store';
+import { fetchSummary, fetchPair } from '../../../state/allCrypto/allCryptoThunk';
+import { setPair } from '../../../state/allCrypto/allCryptoSlice';
 
 const ListCard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

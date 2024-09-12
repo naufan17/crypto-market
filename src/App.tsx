@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Home from "./pages/home";
 import Market from "./pages/market";
 import NotFound from "./pages/notFound"
-import { store } from "./store";
+import { store } from "./state/store";
 
 const App: React.FC = () => {
   return (

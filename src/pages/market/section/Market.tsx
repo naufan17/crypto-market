@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { WebSocketData } from '../../../types/WebSocketData';
-import Chart from './Chart';
+import Chart from './chart/Chart';
 import Loading from '../../../components/ui/Loading';
 
 interface MarketProps {

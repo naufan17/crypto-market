@@ -2,8 +2,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Skeleton from './headerMarket/Skeleton';
 import PriceHR from './headerMarket/PriceHR';
-import { RootState, AppDispatch } from '../../../store';
-import { fetchAllData } from '../../../features/detailCrypto/detailCryptoThunk';
+import { RootState, AppDispatch } from '../../../state/store';
+import { fetchAllData } from '../../../state/detailCrypto/detailCryptoThunk';
 
 interface HeaderProps {
   id?: string;
