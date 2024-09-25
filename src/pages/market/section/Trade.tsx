@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 import Skeleton from './trade/Skeleton';
@@ -11,17 +11,33 @@ interface TradeProps {
 
 const Trade: React.FC<TradeProps> = ({ id }) => {
    const dispatch = useDispatch<AppDispatch>();
-   const { trade, loading } = useSelector((state: RootState) => state.tradeCrypto)
+   const { trade, loading } = useSelector((state: RootState) => state.tradeCrypto);
+   const [visibleCount, setVisibleCount] = useState(10);
+   const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTrades({ id }));
 
     const interval = setInterval(() => {
       dispatch(fetchTrades({ id }))
-    }, 2000);
+    }, 15000);
 
     return () => clearInterval(interval)
   }, [dispatch, id]);
+
+  useEffect(() => {
+    setIsUpdated(true);
+
+    const timer = setTimeout(() => {
+      setIsUpdated(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [trade[0].date]);
+
+  const loadMoreData = () => {
+    setVisibleCount((prevCount) => prevCount + 10)
+  };
 
   if (loading) {
     return <Skeleton/>;
@@ -37,25 +53,25 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
         </div>
       </div>
       <table className="w-full">
-        <thead>
+        <thead className='bg-slate-200 text-sm sm:text-base text-gray-800'>
           <tr>
-            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-slate-200 font-medium font-sans text-sm sm:text-base text-gray-800 tracking-wider">
+            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center font-medium font-sans tracking-wider">
               Waktu
             </th>
-            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-slate-200 font-medium font-sans text-sm sm:text-base text-gray-800 tracking-wider">
+            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center font-medium font-sans tracking-wider">
               Harga
             </th>
-            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-slate-200 font-medium font-sans text-sm sm:text-base text-gray-800 tracking-wider">
+            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center font-medium font-sans tracking-wider">
               Jumlah
             </th>
-            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-slate-200 font-medium font-sans text-sm sm:text-base text-gray-800 tracking-wider">
+            <th className="px-4 sm:px-6 py-3 sm:py-4 text-center font-medium font-sans tracking-wider">
               Jenis
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-200">
-          {trade.slice(0, 10).map((item, index) => (
-            <tr key={index}>
+          {trade.slice(0, visibleCount).map((item, index) => (
+            <tr key={index} className={`transition duration-300 ease-in-out ${isUpdated && item.type === 'buy' ? 'bg-green-100' : ''} ${isUpdated && item.type === 'sell' ? 'bg-red-100' : ''}`}>
               <td className="px-4 sm:px-6 py-3 sm:py-4 text-center font-normal font-sans text-sm sm:text-base text-gray-800">
                 {format(new Date (parseInt(item.date) * 1000), 'dd-MM-yyyy HH:mm:ss')}
               </td>
@@ -71,7 +87,14 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
             </tr>
           ))}
         </tbody>
-      </table> 
+      </table>
+      {visibleCount < trade.length && (
+        <div className="flex p-4 items-center justify-center">
+          <button onClick={loadMoreData} className="inline-flex text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
+            Muat Lebih Banyak
+          </button>
+        </div>
+      )}
     </div>
   )
 }

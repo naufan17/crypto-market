@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pair } from '../../../types/Pairs';
 import InputSearch from '../../../components/ui/InputSearch';
@@ -12,12 +12,15 @@ import { setPair } from '../../../state/allCrypto/allCryptoSlice';
 const ListCard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const loopLoading = Array.from({ length: 8 });
+  const [visibleCount, setVisibleCount] = useState(40);
+  
   const {
     ticker,
     price,
     pair,
     loading
   } = useSelector((state: RootState) => state.allCrypto);
+  
   const sortingOptions: {value: string; label: string}[] = [
     { value: '', label: 'Urutkan' },
     { value: 'namaAZ', label: 'Nama A-Z' },
@@ -36,7 +39,7 @@ const ListCard: React.FC = () => {
 
     const interval = setInterval(() => {
       dispatch(fetchSummary())
-    }, 2000);
+    }, 10000);
 
     return () => clearInterval(interval)
   }, [dispatch]);
@@ -71,17 +74,20 @@ const ListCard: React.FC = () => {
     }
   };
 
+  const loadMoreData = () => {
+    setVisibleCount((prevCount) => prevCount + 40)
+  };
 
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-      <div className="flex flex-col items-center w-full mb-4 sm:flex-row">
+      <div className="flex flex-col items-center w-full mb-5 sm:flex-row">
         <InputSearch handleSearch={handleSearch} placeholder={"Cari nama kripto"}/>
         <Option handleSorting={handleSorting} options={sortingOptions}/>
       </div>
       <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading 
           ? loopLoading.map((_, index) => <Skeleton key={index}/>)
-          : pair.map((item: Pair, index: number) => (
+          : pair.slice(0, visibleCount).map((item: Pair, index: number) => (
             <Card
               key={index}
               id = {item.id}
@@ -97,6 +103,13 @@ const ListCard: React.FC = () => {
           ))
         }
       </div>
+      {visibleCount < pair.length && (
+        <div className="flex p-2 items-center justify-center">
+          <button onClick={loadMoreData} className="inline-flex text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
+            Muat Lebih Banyak
+          </button>
+        </div>
+      )}
     </div>
   )
 }

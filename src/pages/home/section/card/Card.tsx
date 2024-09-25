@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PriceHR from './PriceHR';
 
@@ -15,9 +15,31 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ id, url_logo, maintenance, suspended, description, name, price, price_24h, volume }) => {
+  const [isUpdated, setIsUpdated] = useState(false);
+  const priceChange24h = parseFloat(price_24h);
+  let borderClass = '';
+
+  useEffect(() => {
+    setIsUpdated(true);
+
+    const timer = setTimeout(() => {
+      setIsUpdated(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [price_24h]);
+
+  if (priceChange24h > 0) {
+    borderClass = isUpdated ? 'border-green-300 bg-green-100' : '';
+  } else if (priceChange24h < 0) {
+    borderClass = isUpdated ? 'border-red-300 bg-red-100' : '';
+  } else if (priceChange24h === 0) {
+    borderClass = isUpdated ? 'border-slate-300 bg-slate-100' : '';
+  }
+
   if (maintenance || suspended) {
     return (
-      <div className="p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow opacity-40 cursor-not-allowed hover:opacity-80">
+      <div className={`p-5 duration-300 transform ease-in-out bg-gradient-to-r from-indigo-50 ${borderClass} rounded border-2 opacity-40 cursor-not-allowed hover:opacity-80`}>
         <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mb-4 rounded-full bg-indigo-100">
           <img alt="logo" src={url_logo} className="mx-auto object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12"/>
         </div>
@@ -46,7 +68,7 @@ const Card: React.FC<CardProps> = ({ id, url_logo, maintenance, suspended, descr
   }
 
   return (
-    <Link to={id} key={id} className="relative p-5 duration-300 transform bg-gradient-to-r from-indigo-50 border rounded shadow hover:-translate-y-2">
+    <Link to={id} key={id} className={`relative p-5 duration-300 transform bg-gradient-to-r from-indigo-50 ${borderClass} rounded border-2 hover:-translate-y-1`}>
       <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mb-4 rounded-full bg-indigo-100">
         <img alt="logo" src={url_logo} className="mx-auto object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12"/>
       </div>
@@ -66,7 +88,7 @@ const Card: React.FC<CardProps> = ({ id, url_logo, maintenance, suspended, descr
         Volume : {volume} IDR
       </p>
     </Link>
-  )
+  );
 }
 
 export default Card;
