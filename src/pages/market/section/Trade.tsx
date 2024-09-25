@@ -20,7 +20,7 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
 
     const interval = setInterval(() => {
       dispatch(fetchTrades({ id }))
-    }, 15000);
+    }, 20000);
 
     return () => clearInterval(interval)
   }, [dispatch, id]);
@@ -33,8 +33,7 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
     }, 1000);
 
     return () => clearTimeout(timer);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trade[0].date]);
+  }, [trade]);
 
   const loadMoreData = () => {
     setVisibleCount((prevCount) => prevCount + 10)
