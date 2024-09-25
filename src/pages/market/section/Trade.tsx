@@ -33,6 +33,7 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
     }, 1000);
 
     return () => clearTimeout(timer);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trade[0].date]);
 
   const loadMoreData = () => {
