@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <Provider store={store}>
         <Routes>
           <Route path = "/" element = {<Home/>}/>
+          <Route path = "/not-found" element = {<NotFound/>}/>
           <Route path = "/:id" element = {<Market/>}/>
           <Route path = "*" element = {<NotFound/>}/>
         </Routes>

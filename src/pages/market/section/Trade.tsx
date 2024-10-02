@@ -43,6 +43,10 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
     return <Skeleton/>;
   }
 
+  if (trade.length === 0) {
+    return <div>No ticker data available.</div>;
+  }
+
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8"> 
       <div className="flex flex-row mb-4 md:mb-8 justify-between">

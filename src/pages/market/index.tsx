@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import HeaderMarket from './section/HeaderMarket';
 import Main from './section/Market';
 import Trade from './section/Trade';
-import Footer from '../../components/ui/Footer';
+import Footer from '../../components/layout/Footer';
 
 const Market: React.FC = () => {
   const {id} = useParams();

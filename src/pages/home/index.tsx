@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../../components/ui/Header';
+import Header from '../../components/layout/Header';
 import ListCard from './section/ListCard';
-import Footer from '../../components/ui/Footer';
+import Footer from '../../components/layout/Footer';
 
 const Home: React.FC = () => {      
   return (
