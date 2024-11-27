@@ -68,7 +68,7 @@ const Card: React.FC<CardProps> = ({ id, url_logo, maintenance, suspended, descr
   }
 
   return (
-    <Link to={id} key={id} className={`relative p-5 duration-300 transform bg-gradient-to-r from-indigo-50 ${borderClass} rounded border-2 hover:-translate-y-1`}>
+    <Link to={id} key={id} className={`relative p-5 duration-300 transform bg-gradient-to-r from-indigo-50 ${borderClass} rounded-lg border-2 hover:-translate-y-1`}>
       <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 mb-4 rounded-full bg-indigo-100">
         <img alt="logo" src={url_logo} className="mx-auto object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12"/>
       </div>

@@ -25,7 +25,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
         height: 400,
         layout: {
           background: { color: 'transparent' },
-          textColor: 'rgb(3 7 18)',
+          textColor: 'rgb(3, 7, 18)',
         },
         grid: {
           vertLines: { color: 'transparent' },
