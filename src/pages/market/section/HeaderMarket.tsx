@@ -1,7 +1,7 @@
  import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Skeleton from './headerMarket/Skeleton';
-import PriceHR from './headerMarket/PriceHR';
+import Skeleton from '../../../components/ui/headerMarket/Skeleton';
+import PriceHR from '../../../components/ui/headerMarket/PriceHR';
 import { RootState, AppDispatch } from '../../../state/store';
 import { fetchAllData } from '../../../state/detailCrypto/detailCryptoThunk';
 

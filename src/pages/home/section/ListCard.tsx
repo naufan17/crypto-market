@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pair } from '../../../types/Pairs';
-import InputSearch from '../../../components/ui/InputSearch';
-import Option from '../../../components/ui/Option';
-import Skeleton from './card/Skeleton';
-import Card from './card/Card';
+import InputSearch from '../../../components/ui/common/InputSearch';
+import Option from '../../../components/ui/common/Option';
+import Skeleton from '../../../components/ui/card/Skeleton';
+import Card from '../../../components/ui/card/Card';
 import { RootState, AppDispatch } from '../../../state/store';
 import { fetchSummary, fetchPair } from '../../../state/allCrypto/allCryptoThunk';
 import { setPair } from '../../../state/allCrypto/allCryptoSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const ListCard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,11 +24,11 @@ const ListCard: React.FC = () => {
     loading
   } = useSelector((state: RootState) => state.allCrypto);
   
-  const sortingOptions: {value: string; label: string}[] = [
-    { value: '', label: 'Urutkan' },
+  const sortingOptions: {value: string; label: string, icon?: any}[] = [
+    { value: '', label: 'Urutkan', },
     { value: 'namaAZ', label: 'Nama A-Z' },
     { value: 'namaZA', label: 'Nama Z-A' },
-    { value: 'trenNaik', label: 'Tren Harga Naik' },
+    { value: 'trenNaik', label: 'Tren Harga Naik'  },
     { value: 'trenTurun', label: 'Tren Harga Turun' },
     { value: 'hargaRendah', label: 'Harga Rendah' },
     { value: 'hargaTinggi', label: 'Harga Tinggi' },
@@ -80,9 +83,16 @@ const ListCard: React.FC = () => {
 
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-      <div className="flex flex-col items-center w-full mb-5 sm:flex-row">
-        <InputSearch handleSearch={handleSearch} placeholder={"Cari nama kripto"}/>
-        <Option handleSorting={handleSorting} options={sortingOptions}/>
+      <div className="grid gap-5 mb-5 grid-cols-1 sm:grid-cols-2">
+        <div className="flex flex-col items-center justify-center">
+          <InputSearch handleSearch={handleSearch} placeholder={"Cari nama kripto"}/>
+        </div>
+        <div className='flex flex-row items-center justify-between'>
+          <p className="text-base sm:text-lg font-semibold text-slate-800">
+            {pair.length} Kripto
+          </p>
+          <Option handleSorting={handleSorting} options={sortingOptions}/>
+        </div>
       </div>
       <div className="grid gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading 
@@ -105,8 +115,9 @@ const ListCard: React.FC = () => {
       </div>
       {visibleCount < pair.length && (
         <div className="flex p-2 items-center justify-center">
-          <button onClick={loadMoreData} className="inline-flex text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
-            Muat Lebih Banyak
+          <button onClick={loadMoreData} className="inline-flex items-center text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
+            Muat Lebih Banyak 
+            <FontAwesomeIcon icon={faChevronRight} className="ml-2 text-slate-800 hover:text-slate-600"/>
           </button>
         </div>
       )}

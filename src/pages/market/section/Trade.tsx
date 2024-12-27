@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
-import Skeleton from './trade/Skeleton';
+import Skeleton from '../../../components/ui/trade/Skeleton';
 import { RootState, AppDispatch } from '../../../state/store';
 import { fetchTrades } from '../../../state/tradeCrypto/tradeCryptoThunk';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface TradeProps {
   id?: string;
@@ -94,8 +96,9 @@ const Trade: React.FC<TradeProps> = ({ id }) => {
       </table>
       {visibleCount < trade.length && (
         <div className="flex p-4 items-center justify-center">
-          <button onClick={loadMoreData} className="inline-flex text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
+          <button onClick={loadMoreData} className="inline-flex items-center text-sm sm:text-base font-semibold text-slate-800 hover:text-slate-600">
             Muat Lebih Banyak
+            <FontAwesomeIcon icon={faChevronRight} className="ml-2 text-slate-800 hover:text-slate-600"/>
           </button>
         </div>
       )}
