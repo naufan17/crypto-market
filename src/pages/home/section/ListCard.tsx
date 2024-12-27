@@ -83,7 +83,7 @@ const ListCard: React.FC = () => {
 
   return (
     <div className="relative px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-      <div className="grid gap-4 sm:gap-5 mb-4 sm:mb-5 grid-cols-1 sm:grid-cols-2">
+      <div className="grid gap-3 sm:gap-5 mb-3 sm:mb-5 grid-cols-1 sm:grid-cols-2">
         <div className="flex flex-col items-center justify-center">
           <InputSearch handleSearch={handleSearch} placeholder={"Cari nama kripto"}/>
         </div>
@@ -94,7 +94,7 @@ const ListCard: React.FC = () => {
           <Option handleSorting={handleSorting} options={sortingOptions}/>
         </div>
       </div>
-      <div className="grid gap-4 sm:gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-5 mb-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {loading 
           ? loopLoading.map((_, index) => <Skeleton key={index}/>)
           : pair.slice(0, visibleCount).map((item: Pair, index: number) => (
