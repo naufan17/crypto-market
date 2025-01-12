@@ -11,17 +11,17 @@ interface OptionProps {
 const Option: React.FC<OptionProps> = ({ handleSorting, options }) => {
   return (
     <div className="relative inline-flex w-2/5 sm:w-40 md:w-48">
-      <select onChange={handleSorting} className="w-full sm:w-40 md:w-48 sm:h-12 h-10 px-4 sm:text-base text-md font-medium text-white transition rounded-xl shadow-sm bg-gray-900 hover:bg-gray-800 focus:shadow-outline focus:outline-none appearance-none">
+      <select onChange={handleSorting} className="w-full sm:w-40 md:w-48 sm:h-12 h-10 px-4 sm:text-base text-md font-medium transition rounded-xl border-2 border-gray-900 focus:border focus:ring-2 focus:ring-indigo-300 focus:shadow-outline focus:outline-none appearance-none">
         <option value="" disabled selected>Filter</option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
-            <FontAwesomeIcon icon={option.icon} className="text-white ml-2"/>
+            <FontAwesomeIcon icon={option.icon} className="text-gray-900 ml-2"/>
           </option>
         ))}
       </select>
       <div className="absolute right-0 flex items-center py-3 sm:py-4 px-3 sm:px-4 pointer-events-none">
-        <FontAwesomeIcon icon={faFilter} className="text-white"/>
+        <FontAwesomeIcon icon={faFilter} className="text-gray-900"/>
       </div>
     </div>
   )

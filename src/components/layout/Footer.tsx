@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="flex justify-center place-items-end">
             <p className='text-sm sm:text-base text-slate-800'>
-              Copyright &copy; { currentYear }  Muhammad Naufan Athoillah
+              Copyright &copy; { currentYear } Crypto Market
             </p>
           </div>
         </div>
